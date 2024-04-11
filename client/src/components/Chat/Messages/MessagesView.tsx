@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import type { ReactNode } from 'react';
+// import type { ReactNode } from 'react';
 import type { TMessage } from 'librechat-data-provider';
 import ScrollToBottom from '~/components/Messages/ScrollToBottom';
 import { useScreenshot, useMessageScrolling } from '~/hooks';
@@ -8,10 +8,10 @@ import MultiMessage from './MultiMessage';
 
 export default function MessagesView({
   messagesTree: _messagesTree,
-  Header,
-}: {
+}: // Header,
+{
   messagesTree?: TMessage[] | null;
-  Header?: ReactNode;
+  // Header?: ReactNode;
 }) {
   const { screenshotTargetRef } = useScreenshot();
   const [currentEditId, setCurrentEditId] = useState<number | string | null>(-1);
@@ -46,7 +46,7 @@ export default function MessagesView({
               </div>
             ) : (
               <>
-                {Header && Header}
+                {/* {Header && Header} */}
                 <div ref={screenshotTargetRef}>
                   <MultiMessage
                     key={conversationId} // avoid internal state mixture

@@ -1,11 +1,11 @@
 import { useNavigate } from 'react-router-dom';
-import { EModelEndpoint } from 'librechat-data-provider';
-import { useGetEndpointsQuery } from 'librechat-data-provider/react-query';
+// import { EModelEndpoint } from 'librechat-data-provider';
+import { useGetStartupConfig } from 'librechat-data-provider/react-query';
 import { TooltipProvider, Tooltip, TooltipTrigger, TooltipContent } from '~/components/ui';
-import { useLocalize, useNewConvo, useLocalStorage } from '~/hooks';
-import { icons } from '~/components/Chat/Menus/Endpoints/Icons';
+import { useLocalize, useNewConvo } from '~/hooks';
+// import { icons } from '~/components/Chat/Menus/Endpoints/Icons';
 import { NewChatIcon } from '~/components/svg';
-import { getEndpointField } from '~/utils';
+// import { getEndpointField } from '~/utils';
 
 export default function NewChat({
   toggleNav,
@@ -14,17 +14,18 @@ export default function NewChat({
   toggleNav: () => void;
   subHeaders?: React.ReactNode;
 }) {
+  const { data: startupConfig } = useGetStartupConfig();
   const { newConversation: newConvo } = useNewConvo();
   const navigate = useNavigate();
   const localize = useLocalize();
 
-  const { data: endpointsConfig } = useGetEndpointsQuery();
-  const [convo] = useLocalStorage('lastConversationSetup', { endpoint: EModelEndpoint.openAI });
-  const { endpoint } = convo;
-  const endpointType = getEndpointField(endpointsConfig, endpoint, 'type');
-  const iconURL = getEndpointField(endpointsConfig, endpoint, 'iconURL');
-  const iconKey = endpointType ? 'unknown' : endpoint ?? 'unknown';
-  const Icon = icons[iconKey];
+  // const { data: endpointsConfig } = useGetEndpointsQuery();
+  // const [convo] = useLocalStorage('lastConversationSetup', { endpoint: EModelEndpoint.openAI });
+  // const { endpoint } = convo;
+  // const endpointType = getEndpointField(endpointsConfig, endpoint, 'type');
+  // const iconURL = getEndpointField(endpointsConfig, endpoint, 'iconURL');
+  // const iconKey = endpointType ? 'unknown' : endpoint ?? 'unknown';
+  // const Icon = icons[iconKey];
 
   const clickHandler = (event: React.MouseEvent<HTMLAnchorElement>) => {
     if (event.button === 0 && !event.ctrlKey) {
@@ -48,7 +49,7 @@ export default function NewChat({
             >
               <div className="h-7 w-7 flex-shrink-0">
                 <div className="shadow-stroke relative flex h-full items-center justify-center rounded-full bg-white text-black dark:bg-white">
-                  {endpoint &&
+                  {/* {endpoint &&
                     Icon &&
                     Icon({
                       size: 41,
@@ -56,7 +57,8 @@ export default function NewChat({
                       className: 'h-2/3 w-2/3',
                       endpoint: endpoint,
                       iconURL: iconURL,
-                    })}
+                    })} */}
+                  <img src={startupConfig?.customLogoUrl} alt={`${startupConfig?.appTitle} logo`} />
                 </div>
               </div>
               <div className="text-token-text-primary grow overflow-hidden text-ellipsis whitespace-nowrap text-sm">

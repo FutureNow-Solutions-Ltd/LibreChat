@@ -7,10 +7,10 @@ import { ResizableHandleAlt, ResizablePanel, ResizablePanelGroup } from '~/compo
 import { TooltipProvider, Tooltip } from '~/components/ui/Tooltip';
 import useSideNavLinks from '~/hooks/Nav/useSideNavLinks';
 import { useMediaQuery, useLocalStorage } from '~/hooks';
-import { Separator } from '~/components/ui/Separator';
+// import { Separator } from '~/components/ui/Separator';
 import NavToggle from '~/components/Nav/NavToggle';
 import { useChatContext } from '~/Providers';
-import Switcher from './Switcher';
+// import Switcher from './Switcher';
 import { cn } from '~/utils';
 import Nav from './Nav';
 
@@ -181,7 +181,7 @@ const SidePanel = ({
                 : 'opacity-100',
             )}
           >
-            <div
+            {/* <div
               className={cn(
                 'sticky left-0 right-0 top-0 z-[100] flex h-[52px] flex-wrap items-center justify-center bg-white dark:bg-gray-850',
                 isCollapsed ? 'h-[52px]' : 'px-2',
@@ -193,7 +193,7 @@ const SidePanel = ({
                 endpoint={endpoint}
               />
               <Separator className="bg-gray-100/50 dark:bg-gray-600" />
-            </div>
+            </div> */}
             <Nav
               resize={panelRef.current?.resize}
               isCollapsed={isCollapsed}

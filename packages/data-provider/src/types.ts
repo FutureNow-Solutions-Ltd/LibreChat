@@ -226,6 +226,7 @@ export type TStartupConfig = {
   showBirthdayIcon: boolean;
   helpAndFaqURL: string;
   customFooter?: string;
+  customLogoUrl?: string;
 };
 
 export type TRefreshTokenResponse = {

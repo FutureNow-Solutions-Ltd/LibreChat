@@ -10,7 +10,7 @@ import Presentation from './Presentation';
 import ChatForm from './Input/ChatForm';
 import { buildTree } from '~/utils';
 import Landing from './Landing';
-import Header from './Header';
+// import Header from './Header';
 import Footer from './Footer';
 import store from '~/store';
 
@@ -39,9 +39,9 @@ function ChatView({ index = 0 }: { index?: number }) {
             <Spinner className="opacity-0" />
           </div>
         ) : messagesTree && messagesTree.length !== 0 ? (
-          <MessagesView messagesTree={messagesTree} Header={<Header />} />
+          <MessagesView messagesTree={messagesTree} />
         ) : (
-          <Landing Header={<Header />} />
+          <Landing />
         )}
         <div className="w-full border-t-0 pl-0 pt-2 dark:border-white/20 md:w-[calc(100%-.5rem)] md:border-t-0 md:border-transparent md:pl-0 md:pt-0 md:dark:border-transparent">
           <ChatForm index={index} />
