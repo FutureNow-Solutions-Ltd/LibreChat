@@ -1,10 +1,10 @@
 import debounce from 'lodash/debounce';
 import React, { useEffect, useRef, useCallback } from 'react';
 import { EModelEndpoint } from 'librechat-data-provider';
-import type { TEndpointOption } from 'librechat-data-provider';
+// import type { TEndpointOption } from 'librechat-data-provider';
 import type { UseFormSetValue } from 'react-hook-form';
 import type { KeyboardEvent } from 'react';
-import { forceResize, insertTextAtCursor, trimUndoneRange, getAssistantName } from '~/utils';
+import { forceResize, insertTextAtCursor, trimUndoneRange } from '~/utils';
 import { useAssistantsMapContext } from '~/Providers/AssistantsMapContext';
 import useGetSender from '~/hooks/Conversations/useGetSender';
 import useFileHandling from '~/hooks/Files/useFileHandling';
@@ -97,13 +97,13 @@ export default function useTextarea({
         return localize('com_endpoint_message_not_appendable');
       }
 
-      const sender =
-        conversation?.endpoint === EModelEndpoint.assistants
-          ? getAssistantName({ name: assistantName, localize })
-          : getSender(conversation as TEndpointOption);
+      // const sender =
+      //   conversation?.endpoint === EModelEndpoint.assistants
+      //     ? getAssistantName({ name: assistantName, localize })
+      //     : getSender(conversation as TEndpointOption);
 
       return `${localize('com_endpoint_message')} ${
-        startupConfig?.appTitle ? startupConfig?.appTitle : ''
+        startupConfig?.appTitle ? startupConfig.appTitle : ''
       }…`;
     };
 
@@ -136,6 +136,7 @@ export default function useTextarea({
     assistantName,
     textAreaRef,
     assistantMap,
+    startupConfig?.appTitle,
   ]);
 
   const handleKeyDown = (e: KeyEvent) => {
