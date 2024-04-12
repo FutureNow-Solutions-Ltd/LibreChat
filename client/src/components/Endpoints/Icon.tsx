@@ -16,8 +16,10 @@ import { useAuthContext } from '~/hooks/AuthContext';
 import useAvatar from '~/hooks/Messages/useAvatar';
 import { IconProps } from '~/common';
 import { cn } from '~/utils';
+import { useGetStartupConfig } from 'librechat-data-provider/react-query';
 
 const Icon: React.FC<IconProps> = (props) => {
+  const { data: startupConfig } = useGetStartupConfig();
   const { user } = useAuthContext();
   const {
     size = 30,
@@ -91,6 +93,7 @@ const Icon: React.FC<IconProps> = (props) => {
         </div>
       ),
       name: endpoint,
+      bg: '',
     },
     [EModelEndpoint.azureOpenAI]: {
       icon: <AzureMinimalIcon size={size * 0.5555555555555556} />,
@@ -121,6 +124,7 @@ const Icon: React.FC<IconProps> = (props) => {
         : model?.toLowerCase()?.includes('gemini')
           ? 'Gemini'
           : 'PaLM2',
+      bg: '',
     },
     [EModelEndpoint.anthropic]: {
       icon: <AnthropicIcon size={size * 0.5555555555555556} />,
@@ -134,6 +138,7 @@ const Icon: React.FC<IconProps> = (props) => {
         <img src="/assets/bingai.png" alt="Sydney Icon" />
       ),
       name: jailbreak ? 'Sydney' : 'BingAI',
+      bg: '',
     },
     [EModelEndpoint.chatGPTBrowser]: {
       icon: <GPTIcon size={size * 0.5555555555555556} />,
@@ -146,6 +151,12 @@ const Icon: React.FC<IconProps> = (props) => {
     [EModelEndpoint.custom]: {
       icon: <CustomMinimalIcon size={size * 0.7} />,
       name: 'Custom',
+      bg: '',
+    },
+    [startupConfig?.appTitle as string]: {
+      icon: <img src={startupConfig?.customLogoUrl} alt={`${startupConfig?.appTitle} icon`} />,
+      name: startupConfig?.appTitle ?? '',
+      bg: '',
     },
     null: { icon: <GPTIcon size={size * 0.7} />, bg: 'grey', name: 'N/A' },
     default: {
@@ -162,6 +173,7 @@ const Icon: React.FC<IconProps> = (props) => {
         </div>
       ),
       name: endpoint,
+      bg: '',
     },
   };
 
@@ -174,7 +186,7 @@ const Icon: React.FC<IconProps> = (props) => {
 
   return (
     <div
-      title={name}
+      title={name || ''}
       style={{
         background: bg || 'transparent',
         width: size,

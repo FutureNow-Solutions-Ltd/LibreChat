@@ -10,11 +10,17 @@ import HoverButtons from './HoverButtons';
 import SubRow from './SubRow';
 import { cn } from '~/utils';
 import store from '~/store';
+import { useGetStartupConfig } from 'librechat-data-provider/react-query';
 
 export default function Message(props: TMessageProps) {
   const UsernameDisplay = useRecoilValue<boolean>(store.UsernameDisplay);
   const { user } = useAuthContext();
   const localize = useLocalize();
+  const { data: startupConfig } = useGetStartupConfig();
+
+  if (props.message?.endpoint && startupConfig?.appTitle) {
+    props.message.endpoint = startupConfig?.appTitle;
+  }
 
   const {
     ask,
@@ -44,7 +50,7 @@ export default function Message(props: TMessageProps) {
   if (isCreatedByUser) {
     messageLabel = UsernameDisplay ? user?.name : localize('com_user_message');
   } else {
-    messageLabel = message.sender;
+    messageLabel = startupConfig?.appTitle ? startupConfig.appTitle : message.sender;
   }
 
   return (

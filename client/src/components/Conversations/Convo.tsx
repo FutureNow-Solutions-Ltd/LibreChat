@@ -2,15 +2,15 @@ import { useRecoilValue } from 'recoil';
 import { useParams } from 'react-router-dom';
 import { useState, useRef, useMemo } from 'react';
 import { EModelEndpoint } from 'librechat-data-provider';
-import { useGetEndpointsQuery } from 'librechat-data-provider/react-query';
+// import { useGetEndpointsQuery } from 'librechat-data-provider/react-query';
 import type { MouseEvent, FocusEvent, KeyboardEvent } from 'react';
 import { useConversations, useNavigateToConvo } from '~/hooks';
 import { useUpdateConversationMutation } from '~/data-provider';
-import { MinimalIcon } from '~/components/Endpoints';
+// import { MinimalIcon } from '~/components/Endpoints';
 import { NotificationSeverity } from '~/common';
 import { useToastContext } from '~/Providers';
 import DeleteButton from './DeleteButton';
-import { getEndpointField } from '~/utils';
+// import { getEndpointField } from '~/utils';
 import RenameButton from './RenameButton';
 import store from '~/store';
 
@@ -21,7 +21,7 @@ export default function Conversation({ conversation, retainView, toggleNav, isLa
   const currentConvoId = useMemo(() => params.conversationId, [params.conversationId]);
   const updateConvoMutation = useUpdateConversationMutation(currentConvoId ?? '');
   const activeConvos = useRecoilValue(store.allConversationsSelector);
-  const { data: endpointsConfig } = useGetEndpointsQuery();
+  // const { data: endpointsConfig } = useGetEndpointsQuery();
   const { refreshConversations } = useConversations();
   const { navigateToConvo } = useNavigateToConvo();
   const { showToast } = useToastContext();
@@ -95,19 +95,19 @@ export default function Conversation({ conversation, retainView, toggleNav, isLa
     );
   };
 
-  const icon = MinimalIcon({
-    size: 20,
-    iconURL: getEndpointField(endpointsConfig, conversation.endpoint, 'iconURL'),
-    endpoint: conversation.endpoint,
-    endpointType: conversation.endpointType,
-    model: conversation.model,
-    error: false,
-    className: 'mr-0',
-    isCreatedByUser: false,
-    chatGptLabel: undefined,
-    modelLabel: undefined,
-    jailbreak: undefined,
-  });
+  // const icon = MinimalIcon({
+  //   size: 20,
+  //   iconURL: getEndpointField(endpointsConfig, conversation.endpoint, 'iconURL'),
+  //   endpoint: conversation.endpoint,
+  //   endpointType: conversation.endpointType,
+  //   model: conversation.model,
+  //   error: false,
+  //   className: 'mr-0',
+  //   isCreatedByUser: false,
+  //   chatGptLabel: undefined,
+  //   modelLabel: undefined,
+  //   jailbreak: undefined,
+  // });
 
   const handleKeyDown = (e: KeyEvent) => {
     if (e.key === 'Enter') {
@@ -137,7 +137,6 @@ export default function Conversation({ conversation, retainView, toggleNav, isLa
       {...aProps}
       title={title}
     >
-      {icon}
       <div className="relative line-clamp-1 max-h-5 flex-1 grow overflow-hidden">
         {renaming === true ? (
           <input

@@ -10,6 +10,7 @@ import useGetSender from '~/hooks/Conversations/useGetSender';
 import useFileHandling from '~/hooks/Files/useFileHandling';
 import { useChatContext } from '~/Providers/ChatContext';
 import useLocalize from '~/hooks/useLocalize';
+import { useGetStartupConfig } from 'librechat-data-provider/react-query';
 
 type KeyEvent = KeyboardEvent<HTMLTextAreaElement>;
 
@@ -26,6 +27,7 @@ export default function useTextarea({
   getValues: (field: string) => string;
   disabled?: boolean;
 }) {
+  const { data: startupConfig } = useGetStartupConfig();
   const assistantMap = useAssistantsMapContext();
   const {
     conversation,
@@ -100,7 +102,9 @@ export default function useTextarea({
           ? getAssistantName({ name: assistantName, localize })
           : getSender(conversation as TEndpointOption);
 
-      return `${localize('com_endpoint_message')} ${sender ? sender : 'ChatGPT'}…`;
+      return `${localize('com_endpoint_message')} ${
+        startupConfig?.appTitle ? startupConfig?.appTitle : ''
+      }…`;
     };
 
     const placeholder = getPlaceholderText();
