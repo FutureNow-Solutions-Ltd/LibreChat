@@ -4,7 +4,7 @@
   "description": "",
   "type": "module",
   "scripts": {
-    "data-provider": "cd .. && pnpm run build:data-provider",
+    "data-provider": "cd .. && pnpm build:data-provider",
     "build": "cross-env NODE_ENV=production vite build",
     "build:ci": "cross-env NODE_ENV=development vite build --mode ci",
     "dev": "cross-env NODE_ENV=development vite",
