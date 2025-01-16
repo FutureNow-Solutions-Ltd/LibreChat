@@ -1,6 +1,6 @@
+import { memo } from 'react';
+import { Feather } from 'lucide-react';
 import { EModelEndpoint, isAssistantsEndpoint, alternateName } from 'librechat-data-provider';
-import UnknownIcon from '~/components/Chat/Menus/Endpoints/UnknownIcon';
-import { BrainCircuit } from 'lucide-react';
 import {
   Plugin,
   GPTIcon,
@@ -13,9 +13,15 @@ import {
   AzureMinimalIcon,
   CustomMinimalIcon,
 } from '~/components/svg';
-
+import UnknownIcon from '~/components/Chat/Menus/Endpoints/UnknownIcon';
 import { IconProps } from '~/common';
 import { cn } from '~/utils';
+
+type EndpointIcon = {
+  icon: React.ReactNode | React.JSX.Element;
+  bg?: string;
+  name?: string | null;
+};
 
 function getOpenAIColor(_model: string | null | undefined) {
   const model = _model?.toLowerCase() ?? '';
@@ -109,14 +115,16 @@ const MessageEndpointIcon: React.FC<IconProps> = (props) => {
     ) : (
       <div className="h-6 w-6">
         <div className="shadow-stroke flex h-6 w-6 items-center justify-center overflow-hidden rounded-full">
-          <BrainCircuit className="h-2/3 w-2/3 text-gray-400" />
+          <Feather className="h-2/3 w-2/3 text-gray-400" />
         </div>
       </div>
     ),
     name: endpoint,
   };
 
-  const endpointIcons = {
+  const endpointIcons: {
+    [key: string]: EndpointIcon | undefined;
+  } = {
     [EModelEndpoint.assistants]: assistantsIcon,
     [EModelEndpoint.agents]: agentsIcon,
     [EModelEndpoint.azureAssistants]: assistantsIcon,
@@ -189,7 +197,9 @@ const MessageEndpointIcon: React.FC<IconProps> = (props) => {
   };
 
   let { icon, bg, name } =
-    endpoint && endpointIcons[endpoint] ? endpointIcons[endpoint] : endpointIcons.default;
+    endpoint != null && endpoint && endpointIcons[endpoint]
+      ? endpointIcons[endpoint] ?? {}
+      : (endpointIcons.default as EndpointIcon);
 
   if (iconURL && endpointIcons[iconURL]) {
     ({ icon, bg, name } = endpointIcons[iconURL]);
@@ -201,9 +211,9 @@ const MessageEndpointIcon: React.FC<IconProps> = (props) => {
 
   return (
     <div
-      title={name}
+      title={name ?? ''}
       style={{
-        background: bg || 'transparent',
+        background: bg != null ? bg || 'transparent' : 'transparent',
         width: size,
         height: size,
       }}
@@ -222,4 +232,4 @@ const MessageEndpointIcon: React.FC<IconProps> = (props) => {
   );
 };
 
-export default MessageEndpointIcon;
+export default memo(MessageEndpointIcon);
